@@ -28,8 +28,27 @@ class Expense {
     required this.category,
   }) : id = uuid.v4();
 
-
   String get formatedDate {
     return formatter.format(date);
+  }
+}
+
+class ExpenseBucket {
+  final ExpenseCategory category;
+  final List<Expense> expenses;
+
+  ExpenseBucket.forCategory(List<Expense> allExpense, this.category)
+    : expenses =
+          allExpense.where((expense) => expense.category == category).toList();
+
+  ExpenseBucket({required this.category, required this.expenses});
+
+  double get totalExpenses {
+    double total = 0;
+    for (var expense in expenses) {
+      total += expense.amount;
+    }
+
+    return total;
   }
 }
