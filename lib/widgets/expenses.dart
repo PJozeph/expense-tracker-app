@@ -91,7 +91,10 @@ class _ExpensesState extends State<Expenses> {
             icon: const Icon(Icons.add),
           ),
         ],
-        title: const Text('Your Expenses'),
+        title: Text(
+          'Your Expenses',
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
       ),
       body: Column(
         children: [

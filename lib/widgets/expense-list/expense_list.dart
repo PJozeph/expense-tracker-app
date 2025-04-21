@@ -22,7 +22,9 @@ class ExpenseList extends StatelessWidget {
             onRemoveExpense(expenses[index]);
           },
           background: Container(
-            color: Colors.redAccent,
+            color: Theme.of(context).colorScheme.error,
+            margin: Theme.of(context).cardTheme.margin,
+
             alignment: Alignment.centerRight,
             padding: const EdgeInsets.only(right: 20),
             child: const Icon(Icons.delete, color: Colors.white),
