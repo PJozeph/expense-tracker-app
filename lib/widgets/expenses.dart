@@ -1,5 +1,6 @@
 import 'package:expense_tracker/widgets/expense-list/expense_list.dart';
 import 'package:expense_tracker/models/expense.dart';
+import 'package:expense_tracker/widgets/new-expense.dart';
 import 'package:flutter/material.dart';
 
 class Expenses extends StatefulWidget {
@@ -17,26 +18,39 @@ class _ExpensesState extends State<Expenses> {
       title: 'Flutter Course',
       amount: 19.99,
       date: DateTime.now(),
-      category: Category.work,
+      category: ExpenseCategory.work,
     ),
     Expense(
       title: 'Cinema',
       amount: 10.99,
       date: DateTime.now(),
-      category: Category.leisure,
+      category: ExpenseCategory.leisure,
     ),
     Expense(
       title: 'Groceries',
       amount: 50.00,
       date: DateTime.now(),
-      category: Category.food,
+      category: ExpenseCategory.food,
     ),
   ];
 
+  void _addExpense(Expense expense) {
+    setState(() {
+      _registeredExpenses.add(expense);
+    });
+  }
+
+  void _removeExpense(Expense expense) {
+    setState(() {
+      _registeredExpenses.remove(expense);
+    });
+  }
+
   void _openAddExpenseOverlay() {
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
-      builder: (ctx) => const Text('Add Expense'),
+      builder: (ctx) => Newexpense(onAddExpense: _addExpense),
     );
   }
 
@@ -50,15 +64,18 @@ class _ExpensesState extends State<Expenses> {
             icon: const Icon(Icons.add),
           ),
         ],
-        title: const Text('Your Expenses')
-        ),
+        title: const Text('Your Expenses'),
+      ),
       body: Column(
         children: [
           Text(" The Chart"),
-
           SizedBox(height: 20),
-
-          Expanded(child: ExpenseList(expenses: _registeredExpenses)),
+          Expanded(
+            child: ExpenseList(
+              expenses: _registeredExpenses,
+              onRemoveExpense: _removeExpense,
+            ),
+          ),
         ],
       ),
     );
